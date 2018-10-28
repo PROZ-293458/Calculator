@@ -4,11 +4,16 @@ package com.kaczmii.calculator.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.kaczmii.calculator.model.Calculator;
 
-public class InterfaceController
+public class InterfaceController implements Initializable 
 {
 	private Calculator calc = new Calculator();
 	
@@ -23,9 +28,6 @@ public class InterfaceController
 
     @FXML
     private Button square;
-
-    @FXML
-    private Button cube;
 
     @FXML
     private Button ce;
@@ -76,9 +78,6 @@ public class InterfaceController
     private Button plus;
 
     @FXML
-    private Button plusminus;
-
-    @FXML
     private Button zero;
 
     @FXML
@@ -87,6 +86,45 @@ public class InterfaceController
     @FXML
     private Button equal;
 
+    @FXML
+    private Button left_bracket;
+
+    @FXML
+    private Button right_bracket;
+
+    @FXML
+    void Button_Bracket(ActionEvent event) 
+    {
+    	int counter = 0;
+    	if ( event.getSource() == right_bracket )
+    	{
+    		for ( int i = textField.getText().length()  - 1 ; i >= 0 ; --i )
+        	{
+        		if ( textField.getText().charAt(i) == ')' )
+        		{
+        			counter--;
+        		}
+        		else if ( textField.getText().charAt(i) == '(' )
+        		{
+        			counter++;
+        		}
+        	}
+    		if ( counter >= 1)
+    		{
+    			Button_Numbers( event);
+    		}
+    		else
+    		{
+    			//AlertBox
+    		}
+    	}
+    	else
+    	{
+    		Button_Numbers( event );
+    	}
+    		
+    }
+    
     @FXML
     void Button_Clear(ActionEvent event) 
     {
@@ -107,12 +145,6 @@ public class InterfaceController
     void Button_Clear_Everything(ActionEvent event) 
     {
     	textField.setText("");
-    }
-
-    @FXML
-    void Button_Cube(ActionEvent event) 
-    {
-    	
     }
 
     @FXML
@@ -146,12 +178,6 @@ public class InterfaceController
     }
 
     @FXML
-    void Button_Plus_Minus(ActionEvent event) 
-    {
-
-    }
-
-    @FXML
     void Button_Square_Root(ActionEvent event) 
     {
 
@@ -176,6 +202,12 @@ public class InterfaceController
     {
     	
     }
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }
