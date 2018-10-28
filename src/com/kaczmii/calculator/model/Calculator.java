@@ -7,34 +7,57 @@ import jdk.jshell.SnippetEvent;
 
 public class Calculator 
 {
-	public Calculator(String[] args) 
+	
+	private String algebric_Expression;
+	private final JShell jshell;
+	
+	public Calculator() 
 	{
-			if (args.length != 1) 
+			jshell = JShell.create();
+			algebric_Expression = null;
+	}
+	public boolean Load( String string )
+	{
+		algebric_Expression = new String (string);
+		if ( algebric_Expression.equals(string) )
+			return true;
+		else
+			return false;
+	}
+	public String Calculate( )
+	{
+		System.out.println(algebric_Expression);
+		try
+		{
+			System.out.println( algebric_Expression );
+			List<SnippetEvent> events = jshell.eval(algebric_Expression);
+			for (SnippetEvent e : events) 
 			{
-				System.out.printf("Calc <expression> eg. Calc (9/2)+1.5 \n");
-				return;
-			}
-			JShell jshell = JShell.create();
-			try (jshell) 
-			{
-				List<SnippetEvent> events = jshell.eval(args[0]);
-				for (SnippetEvent e : events) 
+				if (e.causeSnippet() == null) 
 				{
-					if (e.causeSnippet() == null) 
+					switch (e.status()) 
 					{
-						switch (e.status()) 
+					case VALID:
+						if (e.value() != null) 
 						{
-						case VALID:
-							if (e.value() != null) 
-							{
-								System.out.printf("%s = %s\n", args[0], e.value());
-							}
-							break;
-						default: 
-							System.out.printf("Error\n"); break;
-						} 
+							return e.value();
+						}
+						break;
+					default: 
+						System.out.printf("Error\n");
+						return new String("");
 					} 
-				} 
+				}
+				else
+				{
+					return new String("");
+				}
 			} 
-	} 
+		}
+		finally
+		{
+			System.out.println("s");
+		}
+		return new String("");
+	}
 }
