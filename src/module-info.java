@@ -14,4 +14,5 @@ module CalculatorApp11
 	requires jdk.jshell;
 	opens com.kaczmii.calculator to javafx.graphics;
 	opens com.kaczmii.calculator.view to javafx.fxml;
+	opens com.kaczmii.calculator.controller to javafx.fxml;
 }

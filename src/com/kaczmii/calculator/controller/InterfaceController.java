@@ -1,21 +1,25 @@
-package com.kaczmii.calculator.view;
+package com.kaczmii.calculator.controller;
 
 
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.kaczmii.calculator.model.AlertBox;
 import com.kaczmii.calculator.model.Calculator;
 
 public class InterfaceController implements Initializable 
 {
 	private Calculator calc = new Calculator();
+	private AlertBox alert = new AlertBox();
 	
     @FXML
     private TextField textField;
@@ -115,12 +119,21 @@ public class InterfaceController implements Initializable
     		}
     		else
     		{
-    			//AlertBox
+    			alert.show( AlertType.WARNING, "OSTRZEZENIE", "Brak mozliwosci dodania prawego nawiasu, za mala ilosc lewych nawiasow.", "Liczba nawiasow musi sie zgadzac.", ButtonType.OK);
     		}
     	}
     	else
     	{
-    		Button_Numbers( event );
+    		if ( textField.getText().length() == 0 )
+    			Button_Numbers ( event );
+    		else if ( isOperator( textField.getText().charAt(textField.getText().length() - 1 ) ) )
+    		{
+    			Button_Numbers( event );
+    		}
+    		else
+    		{
+    			alert.show( AlertType.WARNING, "OSTRZEZENIE", "Brak mozliwosci dodania nawiasu, gdy nie ma przed operatora.", "Dodaj wczesniej operator algebraiczny.", ButtonType.OK);
+    		}
     	}
     		
     }
@@ -134,11 +147,6 @@ public class InterfaceController implements Initializable
     		temporary = temporary.substring(0, temporary.length()-1 );
     		textField.setText( temporary );
     	}
-    	else
-    	{
-    		//AlertBox
-    		System.out.println("Alert");
-    	}
     }
 
     @FXML
@@ -150,6 +158,8 @@ public class InterfaceController implements Initializable
     @FXML
     void Button_Equals(ActionEvent event) 
     {
+    	
+    	textField.setText( textField.getText().replaceAll( (String) "%", (String) "/100.0"));
     	if ( calc.Load(textField.getText() ) )
     	{
     		textField.setText( calc.Calculate() );
@@ -174,27 +184,50 @@ public class InterfaceController implements Initializable
     @FXML
     void Button_Percent(ActionEvent event) 
     {
+    	char last = textField.getText().charAt( textField.getText().length() -1 );
+    	if ( ( last == '%' || !isNumber(last) ) && last != ')' )
+    	{
+    		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Znaku procentu nie mozna uzyc w tym miejscu", "Mozna go uzyc tylko po opeartorach albo po nawiasie", ButtonType.OK);
+    	}
+    	else
+    	{
+        	Button temporary = (Button) event.getSource();
+        	textField.setText(textField.getText() + temporary.getText() );
+    	}
 
     }
 
     @FXML
     void Button_Square_Root(ActionEvent event) 
     {
-
+    	
     }
 
     @FXML
     void Button_Times(ActionEvent event) 
     {
-
+    	if ( isOperator( textField.getText().charAt( textField.getText().length() - 1 ) ) )
+    	{
+    		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozesz dodawac po sobie dwoch operatorow.", "", ButtonType.OK);
+    	}
+    	else
+    		textField.setText(textField.getText() + "*");
     }
 
     @FXML
     void Button_operator(ActionEvent event)
     {
-    	
     	Button temporary = (Button) event.getSource();
-    	textField.setText(textField.getText() + temporary.getText());
+    	if ( textField.getText().length() == 0 )
+    	{
+    		textField.setText(textField.getText() + temporary.getText());
+    	}
+    	else if ( isOperator( textField.getText().charAt( textField.getText().length() - 1 ) ) )
+    	{
+    		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozesz dodawac po sobie dwoch operatorow.", "", ButtonType.OK);
+    	}
+    	else
+    		textField.setText(textField.getText() + temporary.getText());
     }
 
     @FXML
@@ -208,6 +241,27 @@ public class InterfaceController implements Initializable
 		// TODO Auto-generated method stub
 		
 	}
-
-
+	
+	private boolean isNumber( char a )
+	{
+		char[] numbers = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+		for (char number : numbers)
+		{
+			if ( number == a )
+				return true;
+		}
+		return false;
+	}
+	private boolean isOperator( char a )
+	{
+		char[] operators = { '+', '-', '*', '/', '.' };
+		for (char operator : operators)
+		{
+			if ( operator == a )
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }

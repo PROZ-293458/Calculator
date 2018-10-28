@@ -56,7 +56,7 @@ public class Calculator
 		}
 		finally
 		{
-			System.out.println("s");
+			
 		}
 		return new String("");
 	}

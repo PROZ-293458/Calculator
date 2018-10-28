@@ -1,6 +1,6 @@
 package com.kaczmii.calculator;
 
-import com.kaczmii.calculator.view.InterfaceController;
+import com.kaczmii.calculator.controller.InterfaceController;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
