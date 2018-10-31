@@ -100,8 +100,23 @@ public class InterfaceController implements Initializable
     void Button_Bracket(ActionEvent event) 
     {
     	int counter = 0;
+    	char last = textField.getText().charAt( textField.getText().length() - 1 );
+    	if ( textField.getText().length() > 1 )
+    	{
+    		char prelast = textField.getText().charAt( textField.getText().length() - 2 );
+    		if ( last == '2' && prelast == '^' )
+    		{
+    			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna wykonac tej operacji", "Po znaku potegi mozna dac tylko opeartory", ButtonType.OK);
+    			return;
+    		}
+    	}
     	if ( event.getSource() == right_bracket )
     	{
+    		if ( last == '(' )
+    		{
+    			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Brak mozliwosci dodania prawego nawiasu", "Nie ma nic pomiedzy lewym a prawym nawiasem", ButtonType.OK);
+    			return;
+    		}
     		for ( int i = textField.getText().length()  - 1 ; i >= 0 ; --i )
         	{
         		if ( textField.getText().charAt(i) == ')' )
@@ -125,7 +140,9 @@ public class InterfaceController implements Initializable
     	else
     	{
     		if ( textField.getText().length() == 0 )
-    			Button_Numbers ( event );
+    		{
+    			return;
+    		}
     		else if ( isOperator( textField.getText().charAt(textField.getText().length() - 1 ) ) )
     		{
     			Button_Numbers( event );
@@ -158,55 +175,136 @@ public class InterfaceController implements Initializable
     @FXML
     void Button_Equals(ActionEvent event) 
     {
-    	
-    	textField.setText( textField.getText().replaceAll( (String) "%", (String) "/100.0"));
-    	if ( calc.Load(textField.getText() ) )
-    	{
-    		textField.setText( calc.Calculate() );
-    	}
-    	else
-    		System.out.println( "nie dziala");
+    	calc.Load(textField.getText() );
+    	textField.setText( calc.Calculate() );
     }
 
     @FXML
     void Button_Factorial(ActionEvent event) 
     {
-    	
+    	if ( textField.getText().length() == 0 )
+    	{
+    		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna uzyc w tym miejscu znaku silni", "Znak silni nie moze zostac uzyty na poczatu", ButtonType.OK);
+    		return;
+    	}
+    	char last = textField.getText().charAt( textField.getText().length() - 1 );
+    	if ( textField.getText().length() > 1 )
+    	{
+    		char prelast = textField.getText().charAt( textField.getText().length() - 2 );
+    		if ( last == '2' && prelast == '^' )
+    			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna wykonac tej operacji", "Po znaku potegi mozna dac tylko opeartory", ButtonType.OK);
+    	}
+    	if ( textField.getText().length() != 0 )
+    	{
+        	if ( last == ')' || isNumber(last) )
+        	{
+            	textField.setText(textField.getText() + "!" );
+            	return;
+        	}
+    	}
+    	alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna uzywac silni w tej sytuacji.", "Silnia jest dozwolona tylko za ')' i za liczbami", ButtonType.OK);
+    
     }
 
     @FXML
     void Button_Numbers(ActionEvent event) 
     {
+    	if ( textField.getText().length() != 0 )
+    	{
+    		char last = textField.getText().charAt( textField.getText().length() - 1 );
+        	if ( textField.getText().length() > 1 )
+        	{
+        		char prelast = textField.getText().charAt( textField.getText().length() - 2 );
+        		if ( last == '2' && prelast == '^' )
+        		{
+        			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna wykonac tej operacji", "Po znaku potegi mozna dac tylko opeartory", ButtonType.OK);
+        			return;
+        		}
+        	}
+    		if ( isOperator(last) || isNumber(last) || last == '.' || last == '(' )
+    		{
+        		if ( textField.getText().length() > 1 )
+        		{
+            		char prelast = textField.getText().charAt(textField.getText().length() - 2);
+            		if ( last == '0' && isOperator(prelast))
+            		{
+            			Button_Clear( event );
+            		}
+        		}
+        		if ( textField.getText().length() == 1 && textField.getText().charAt(0) == '0' )
+        		{
+        			Button_Clear( event );
+        		}
+    		}
+    		else
+    		{
+    			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna uzywac liczb w tej sytuacji.", "Liczby s¹ dozwolone tylko po opeatorach i innych liczbach", ButtonType.OK);
+    			return;
+    		}
+    	}
     	Button temporary = (Button) event.getSource();
-    	textField.setText(textField.getText() + temporary.getText());
+        textField.setText(textField.getText() + temporary.getText());
     }
 
     @FXML
     void Button_Percent(ActionEvent event) 
     {
-    	char last = textField.getText().charAt( textField.getText().length() -1 );
+    	if ( textField.getText().length() == 0 )
+    	{
+    		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna uzyc w tym miejscu znaku procentu", "Znak procentu nie moze zostac uzyty na poczatu", ButtonType.OK);
+    		return;
+    	}
+    	char last = textField.getText().charAt( textField.getText().length() - 1 );
+    	if ( textField.getText().length() > 1 )
+    	{
+    		char prelast = textField.getText().charAt( textField.getText().length() - 2 );
+    		if ( last == '2' && prelast == '^' )
+    		{
+    			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna wykonac tej operacji", "Po znaku potegi mozna dac tylko opeartory", ButtonType.OK);
+    			return;
+    		}
+    	}
     	if ( ( last == '%' || !isNumber(last) ) && last != ')' )
     	{
     		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Znaku procentu nie mozna uzyc w tym miejscu", "Mozna go uzyc tylko po opeartorach albo po nawiasie", ButtonType.OK);
     	}
     	else
     	{
-        	Button temporary = (Button) event.getSource();
-        	textField.setText(textField.getText() + temporary.getText() );
+        	textField.setText(textField.getText() + "%" );
     	}
-
     }
 
     @FXML
     void Button_Square_Root(ActionEvent event) 
     {
-    	
+        {
+        	if ( textField.getText().length() != 0 )
+        	{
+            	char last = textField.getText().charAt( textField.getText().length() -1 );
+            	if ( isOperator(last)  )
+            	{
+                	textField.setText(textField.getText() + "sqrt" + '(' );
+            	}
+            	else
+            		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna uzywac pierwiastka w tej sytuacji.", "Pierwiastek jest dozwolony tylko po operatorach", ButtonType.OK);
+        	}
+        	else
+        	{
+            	textField.setText(textField.getText() +"sqrt" + '(' );
+        	}
+        		
+
+        }
     }
 
     @FXML
     void Button_Times(ActionEvent event) 
     {
-    	if ( isOperator( textField.getText().charAt( textField.getText().length() - 1 ) ) )
+    	if ( textField.getText().length() == 0 )
+    	{
+    		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozesz rozpoczac od operatora.", "", ButtonType.OK);
+    	}
+    	else if ( isOperator( textField.getText().charAt( textField.getText().length() - 1 ) ) || textField.getText().charAt( textField.getText().length() - 1 ) == '!' )
     	{
     		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozesz dodawac po sobie dwoch operatorow.", "", ButtonType.OK);
     	}
@@ -220,9 +318,9 @@ public class InterfaceController implements Initializable
     	Button temporary = (Button) event.getSource();
     	if ( textField.getText().length() == 0 )
     	{
-    		textField.setText(textField.getText() + temporary.getText());
+    		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozesz rozpoczac od operatora.", "", ButtonType.OK);
     	}
-    	else if ( isOperator( textField.getText().charAt( textField.getText().length() - 1 ) ) )
+    	else if ( isOperator( textField.getText().charAt( textField.getText().length() - 1 ) ) || textField.getText().charAt( textField.getText().length() - 1 ) == '!' )
     	{
     		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozesz dodawac po sobie dwoch operatorow.", "", ButtonType.OK);
     	}
@@ -234,6 +332,65 @@ public class InterfaceController implements Initializable
     void Button_square(ActionEvent event) 
     {
     	
+    	if ( textField.getText().length() != 0 )
+    	{
+    		char last = textField.getText().charAt( textField.getText().length() - 1 );
+        	if ( textField.getText().length() > 1 )
+        	{
+        		char prelast = textField.getText().charAt( textField.getText().length() - 2 );
+        		if ( last == '2' && prelast == '^' )
+        		{
+        			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna wykonac tej operacji", "Po znaku potegi mozna dac tylko opeartory", ButtonType.OK);
+        			return;
+        		}
+        	}
+        	if ( last == ')' || isNumber(last) )
+        	{
+            	textField.setText(textField.getText() + "^2" );
+            	return;
+        	}
+    	}
+    	alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna uzywac kwadratu w tej sytuacji.", "Kwadrat jest dozwolona tylko za ')' i za liczbami", ButtonType.OK);
+    
+    }
+    
+    @FXML
+    void Button_dot(ActionEvent event) 
+    {
+    	if ( textField.getText().length() != 0 )
+    	{
+    		char last = textField.getText().charAt( textField.getText().length() - 1 );
+        	if ( textField.getText().length() > 1 )
+        	{
+        		char prelast = textField.getText().charAt( textField.getText().length() - 2 );
+        		if ( last == '2' && prelast == '^' )
+        		{
+        			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna wykonac tej operacji", "Po znaku potegi mozna dac tylko opeartory", ButtonType.OK);
+        			return;
+        		}
+        	}
+    		int flag=0;
+    		for ( int counter = textField.getText().length()-1 ; counter >= 0  ; counter-- )
+    		{
+    			if ( isNumber (textField.getText().charAt( counter ) ) )
+    				continue;
+    			if ( textField.getText().charAt( counter ) == '.' )
+    				flag = 1;
+    			if ( isOperator (textField.getText().charAt( counter ) ) )
+    				break;
+    		}
+        	if ( !isOperator(last) && (last != '(' && last != ')' && last != '!' && last != '%') )
+        	{
+        		if ( flag == 0 )
+        		{
+                	Button temporary = (Button) event.getSource();
+                	textField.setText(textField.getText() + temporary.getText() );
+                	return;
+        		}
+        	}
+        	alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna uzywac kropki w tej sytuacji.", "Kropka jest dozwolona tylko raz w liczbie", ButtonType.OK);
+    			
+    	}
     }
 
 	@Override
@@ -252,9 +409,10 @@ public class InterfaceController implements Initializable
 		}
 		return false;
 	}
+	
 	private boolean isOperator( char a )
 	{
-		char[] operators = { '+', '-', '*', '/', '.' };
+		char[] operators = { '+', '-', '*', '/' };
 		for (char operator : operators)
 		{
 			if ( operator == a )
