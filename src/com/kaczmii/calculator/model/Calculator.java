@@ -36,22 +36,28 @@ public class Calculator
 	{
 		if ( string.contains("sqrt") )
 		{
-			int begin, end;
-			for ( int i = 0 ; i < string.length() - 1 ; i++ )
+			int begin = 0, end = 0;
+			String toSqrt;
+			double Sqrt;
+			for ( int i = 0, j = 0; i < string.length() ; i++, j++ )
 			{
 				if ( string.charAt(i) == 't' )
 				{
-					begin = i + 1;
-					for ( int j = 0 ; j <  string.length() - 1 ; j++ )
+					begin = i + 2;
+					j = i + 2;
+					for ( ; j < string.length() ; j++ )
 					{
-						if ( isNumber( string.charAt ( j ) ||  )
+						if ( string.charAt(j) != ')' )
 							continue;
-						end = j - 1;
+						end = j;
 						break;
 					}
+					toSqrt = string.substring(begin, end);
+					Sqrt = Math.sqrt( Double.parseDouble( toSqrt ) );
+					toSqrt = string.substring(begin - 5, end + 1);
+					string = new String(string.replace(toSqrt, Double.toString(Sqrt)));
 				}
 			}
-			System.out.println("pierwiastek");
 		}
 		return string;
 	}
@@ -63,17 +69,6 @@ public class Calculator
 			System.out.println("kwadrat");
 		}
 		return string;
-	}
-	
-	private boolean isNumber( char a )
-	{
-		char[] numbers = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-		for (char number : numbers)
-		{
-			if ( number == a )
-				return true;
-		}
-		return false;
 	}
 	
 	public String Calculate( )
