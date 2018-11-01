@@ -100,18 +100,22 @@ public class InterfaceController implements Initializable
     void Button_Bracket(ActionEvent event) 
     {
     	int counter = 0;
-    	char last = textField.getText().charAt( textField.getText().length() - 1 );
-    	if ( textField.getText().length() > 1 )
+    	if ( textField.getText().length() != 0 )
     	{
-    		char prelast = textField.getText().charAt( textField.getText().length() - 2 );
-    		if ( last == '2' && prelast == '^' )
-    		{
-    			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna wykonac tej operacji", "Po znaku potegi mozna dac tylko opeartory", ButtonType.OK);
-    			return;
-    		}
+    		char last = textField.getText().charAt( textField.getText().length() - 1 );
+        	if ( textField.getText().length() > 1 )
+        	{
+        		char prelast = textField.getText().charAt( textField.getText().length() - 2 );
+        		if ( last == '2' && prelast == '^' )
+        		{
+        			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna wykonac tej operacji", "Po znaku potegi mozna dac tylko opeartory", ButtonType.OK);
+        			return;
+        		}
+        	}
     	}
     	if ( event.getSource() == right_bracket )
     	{
+    		char last = textField.getText().charAt( textField.getText().length() - 1 );
     		if ( last == '(' )
     		{
     			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Brak mozliwosci dodania prawego nawiasu", "Nie ma nic pomiedzy lewym a prawym nawiasem", ButtonType.OK);
@@ -141,7 +145,8 @@ public class InterfaceController implements Initializable
     	{
     		if ( textField.getText().length() == 0 )
     		{
-    			return;
+    	    	Button temporary = (Button) event.getSource();
+    	        textField.setText(textField.getText() + temporary.getText());
     		}
     		else if ( isOperator( textField.getText().charAt(textField.getText().length() - 1 ) ) )
     		{
