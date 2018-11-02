@@ -10,9 +10,20 @@ import javafx.stage.Stage;
 public class Main extends Application
 {
 
+	public Main()
+	{
+		
+	}
+	
+	public static void main(String args[] )
+	{
+		launch(args);
+	}
+	
 	@Override
 	public void start(Stage arg0) throws Exception 
 	{
+		
 		try
 		{
 			ViewLoader<AnchorPane, InterfaceController> viewLoader = new ViewLoader<AnchorPane, InterfaceController>("view/Interface.fxml");
@@ -31,8 +42,5 @@ public class Main extends Application
 		}
 	}
 	
-	public static void main(String args[] )
-	{
-		launch(args);
-	}
+
 }

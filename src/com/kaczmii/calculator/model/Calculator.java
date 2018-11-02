@@ -23,33 +23,40 @@ public class Calculator
 			algebric_Expression = null;
 	}
 	
-	public void Load( String string )
+	public boolean Load( String string )
 	{
-		string = new String( StringOperations.Repair_Percent(string) );
-		string = new String( StringOperations.Repair_Square(string) );
-		string = new String( StringOperations.Repair_Square_Root(string) );
-		string = new String( StringOperations.Repair_Factorial(string) );
-		algebric_Expression = new String(string);
+		int counter = 0;
+		AlertBox alertBox = new AlertBox();
+		for ( int i = 0 ; i < string.length() ; i ++ )
+		{
+			if ( string.charAt(i) == '(' )
+				counter++;
+			if ( string.charAt(i) == ')' )
+				counter--;
+		}
+		if ( counter != 0 )
+		{
+			alertBox.show(AlertType.ERROR, "BLAD", "Nie mozna policzyc wyrazenia", "Nie zgadza sie ilosc nawiasow", ButtonType.OK);
+			return false;
+		}
+		else
+		{
+			string = new String( StringOperations.Repair_Percent(string) );
+			string = new String( StringOperations.Repair_Square(string) );
+			string = new String( StringOperations.Repair_Square_Root(string) );
+			string = new String( StringOperations.Repair_Factorial(string) );
+			algebric_Expression = new String(string);
+			return true;
+		}
+		
+		
 	}
 	
 	public String Calculate( )
 	{
 		try
 		{
-			int counter = 0;
 			AlertBox alertBox = new AlertBox();
-			for ( int i = 0 ; i < algebric_Expression.length() ; i ++ )
-			{
-				if ( algebric_Expression.charAt(i) == '(' )
-					counter++;
-				if ( algebric_Expression.charAt(i) == ')' )
-					counter--;
-			}
-			if ( counter != 0 )
-			{
-				alertBox.show(AlertType.ERROR, "BLAD", "Nie mozna policzyc wyrazenia", "Nie zgadza sie ilosc nawiasow", ButtonType.OK);
-				return algebric_Expression;
-			}
 			List<SnippetEvent> events = jshell.eval(algebric_Expression);
 			for (SnippetEvent e : events) 
 			{

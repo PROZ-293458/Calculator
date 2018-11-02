@@ -18,7 +18,7 @@ import com.kaczmii.calculator.model.Calculator;
 
 public class InterfaceController implements Initializable 
 {
-	private Calculator calc = new Calculator();
+	private Calculator calculator = new Calculator();
 	private AlertBox alert = new AlertBox();
 	
     @FXML
@@ -99,38 +99,53 @@ public class InterfaceController implements Initializable
     @FXML
     void Button_Bracket(ActionEvent event) 
     {
-    	int counter = 0;
+    	int counter = 0; // licznik nawiasow
     	if ( event.getSource() == right_bracket )
     	{
-    		char last = textField.getText().charAt( textField.getText().length() - 1 );
-    		if ( last == '(' )
+    		// jesli nawias jest prawy
+    		if ( textField.getText().length() == 0)
     		{
-    			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Brak mozliwosci dodania prawego nawiasu", "Nie ma nic pomiedzy lewym a prawym nawiasem", ButtonType.OK);
-    			return;
-    		}
-    		for ( int i = textField.getText().length()  - 1 ; i >= 0 ; --i )
-        	{
-        		if ( textField.getText().charAt(i) == ')' )
-        		{
-        			counter--;
-        		}
-        		else if ( textField.getText().charAt(i) == '(' )
-        		{
-        			counter++;
-        		}
-        	}
-    		if ( counter >= 1)
-    		{
-    			Button temporary = (Button) event.getSource();
-    	        textField.setText(textField.getText() + temporary.getText());
+    			// Proba dodania prawego nawiasu na poczatku tekstu
+    			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Brak mozliwosci dodania prawego nawiasu.", "Nie mozna dodawac prawego nawiasu na poczatku tekstu.", ButtonType.OK);
     		}
     		else
     		{
-    			alert.show( AlertType.WARNING, "OSTRZEZENIE", "Brak mozliwosci dodania prawego nawiasu, za mala ilosc lewych nawiasow.", "Liczba nawiasow musi sie zgadzac.", ButtonType.OK);
+    			char last = textField.getText().charAt( textField.getText().length() - 1 );
+        		if ( last == '(' )
+        		{
+        			// Proba dodania prawego nawiasu zaraz za lewym
+        			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Brak mozliwosci dodania prawego nawiasu", "Nie ma nic pomiedzy lewym a prawym nawiasem", ButtonType.OK);
+        			return;
+        		}
+        		for ( int i = textField.getText().length()  - 1 ; i >= 0 ; --i )
+            	{
+        			// Sprawdzanie zgodnosci ilosci nawiasow
+            		if ( textField.getText().charAt(i) == ')' )
+            		{
+            			counter--;
+            		}
+            		else if ( textField.getText().charAt(i) == '(' )
+            		{
+            			counter++;
+            		}
+            	}
+        		if ( counter >= 1)
+        		{
+        			// Dodanie nawiasu, bo brakuje prawych nawiasow
+        			Button temporary = (Button) event.getSource();
+        	        textField.setText(textField.getText() + temporary.getText());
+        		}
+        		else
+        		{
+        			// Nie brakuje nawiasow
+        			alert.show( AlertType.WARNING, "OSTRZEZENIE", "Brak mozliwosci dodania prawego nawiasu, za mala ilosc lewych nawiasow.", "Liczba nawiasow musi sie zgadzac.", ButtonType.OK);
+        		}
     		}
+    		
     	}
     	else
     	{
+    		// lewy nawias
     		if ( textField.getText().length() != 0 )
         	{
         		char last = textField.getText().charAt( textField.getText().length() - 1 );
@@ -146,6 +161,7 @@ public class InterfaceController implements Initializable
         	}
     		if ( textField.getText().length() == 0 )
     		{
+    			// Jeœli pierwszy znak
     	    	Button temporary = (Button) event.getSource();
     	        textField.setText(textField.getText() + temporary.getText());
     		}
@@ -211,8 +227,8 @@ public class InterfaceController implements Initializable
     @FXML
     void Button_Equals(ActionEvent event) 
     {
-    	calc.Load(textField.getText() );
-    	textField.setText( calc.Calculate() );
+    	if( calculator.Load(textField.getText() ) )
+    		textField.setText( calculator.Calculate() );
     }
 
     @FXML
@@ -264,12 +280,16 @@ public class InterfaceController implements Initializable
             		char prelast = textField.getText().charAt(textField.getText().length() - 2);
             		if ( last == '0' && isOperator(prelast))
             		{
-            			Button_Clear( event );
+            			String temporary = new String (textField.getText() );
+                		temporary = temporary.substring(0, temporary.length()-1 );
+                		textField.setText( temporary );
             		}
         		}
         		if ( textField.getText().length() == 1 && textField.getText().charAt(0) == '0' )
         		{
-        			Button_Clear( event );
+        			String temporary = new String (textField.getText() );
+            		temporary = temporary.substring(0, temporary.length()-1 );
+            		textField.setText( temporary );
         		}
     		}
     		else
