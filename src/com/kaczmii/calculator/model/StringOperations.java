@@ -2,6 +2,7 @@ package com.kaczmii.calculator.model;
 
 
 import java.lang.Math;
+import com.kaczmii.calculator.model.Calculator;
 
 public class StringOperations 
 {
@@ -15,27 +16,39 @@ public class StringOperations
 	{
 		if ( string.contains("sqrt") )
 		{
+			Calculator calc = new Calculator();
 			int begin = 0, end = 0;
 			String toSqrt;
 			double Sqrt;
-			for ( int i = 0, j = 0; i < string.length() ; i++, j++ )
+			for ( int i = 0, j = 0; i < string.length() ; i++ )
 			{
 				if ( string.charAt(i) == 't' )
 				{
 					begin = i + 2;
-					j = i + 2;
-					for ( ; j < string.length() ; j++ )
+					int counter = 1;
+					for ( j = begin ; j < string.length() ; j++ )
 					{
+						if ( string.charAt(j) == '(' )
+							++counter;
 						if ( string.charAt(j) != ')' )
 							continue;
-						end = j;
-						break;
+						--counter;
+						if ( counter == 0 )
+						{
+							end = j - 1;
+							break;
+						}
 					}
-					toSqrt = string.substring(begin, end);
+					if ( begin == end )
+						toSqrt = Character.toString(string.charAt(end) );
+					else
+						toSqrt = string.substring(begin, end + 1);
 					if ( toSqrt.contains("sqrt") )
-						Repair_Square_Root(toSqrt);
+						toSqrt = Repair_Square_Root ( toSqrt );
+					calc.Load(toSqrt);
+					toSqrt = calc.Calculate();
 					Sqrt = Math.sqrt( Double.parseDouble( toSqrt ) );
-					toSqrt = string.substring(begin - 5, end + 1);
+					toSqrt = string.substring(begin - 5, end + 2);
 					string = new String(string.replace(toSqrt, Double.toString(Sqrt)));
 				}
 			}
@@ -45,65 +58,157 @@ public class StringOperations
 	
 	public static String Repair_Square ( String string )
 	{
-		boolean flag = false;
 		if ( string.contains("^2") )
 		{
+			Calculator calc = new Calculator();
 			int begin = 0, end = 0;
+			boolean flag = false;
 			String toSq;
 			double Sq;
-			for ( int i = 0, j = 0; i < string.length() ; i++ )
+			for ( int i = (string.length()-1), j = 0; i >= 0 ; i-- )
 			{
-				if ( string.charAt(i) == '^' )
+				if ( string.charAt(i) == '^'  )
 				{
-					if ( string.charAt(i - 1) == ')')
-						end = i - 1;
-					else
-						end = i;
-					
-					for ( j = end ; j >= 0 ; j-- )
+					if ( string.charAt( i - 1 ) == ')' )
 					{
-						if ( j == 0 )
+						flag = true;
+						end = i - 2;
+						int counter = 1;
+						for ( j = end ; j >= 0 ; j-- )
 						{
-							if ( string.charAt(j) == '(' )
+							if ( string.charAt(j) == ')' )
+								++counter;
+							if ( string.charAt(j) != '(' )
+								continue;
+							--counter;
+							if ( counter == 0 )
 							{
-								flag = true;
 								begin = j + 1;
+								break;
 							}
-							else
-								begin = j;
-							break;
 						}
-						if ( string.charAt(j) == '(' )
+					}
+					else
+					{
+						end = i - 1;
+						for ( j = end ; j >= 0 ; j-- )
 						{
-							begin = j + 1;
-							flag = true;
-							break;
-						}
-						if ( isOperator( string.charAt(j) ) )
-						{
+							if ( isNumber(string.charAt(j)) || string.charAt(j) == '.' )
+								continue;
 							begin = j + 1;
 							break;
 						}
 					}
-					toSq = string.substring(begin, end);
-					System.out.println( begin);//
-					System.out.println( end);//
-					System.out.println(toSq);//
-					if ( toSq.contains("^2") )
-						Repair_Square(toSq);
-					Sq = Math.pow( Double.parseDouble( toSq ), 2 );
-					System.out.println(Sq);//
-					if ( flag )
-						toSq = string.substring(begin - 1, end + 3);
+					if ( begin == end )
+						toSq = Character.toString(string.charAt(end) );
 					else
-						toSq = string.substring(begin, end + 2);
+						toSq = string.substring(begin, end + 1);
+					if ( toSq.contains("sqrt") )
+						toSq = Repair_Square_Root( toSq );
+					if ( toSq.contains("^2") )
+						toSq = Repair_Square( toSq );
+					if ( toSq.contains("!"))
+						toSq = Repair_Factorial ( toSq );
+					calc.Load(toSq);
+					toSq = calc.Calculate();
+					Sq = Math.pow( Double.parseDouble( toSq ), 2 );
+					if ( flag )
+						toSq = string.substring(begin - 1, end + 4);
+					else
+						toSq = string.substring(begin, end + 3);
 					string = new String(string.replace(toSq, Double.toString(Sq)));
+					break;
 				}
 			}
 		}
 		return string;
 	}
 	
+	public static String Repair_Factorial ( String string )
+	{
+		if ( string.contains("!") )
+		{
+			Calculator calc = new Calculator();
+			int begin = 0, end = 0;
+			boolean flag = false;
+			String toFctr;
+			double Fctr;
+			for ( int i = string.length() - 1, j = 0; i >= 0 ; i-- )
+			{
+				if ( string.charAt(i) == '!' )
+				{
+					if ( string.charAt( i - 1 ) == ')' )
+					{
+						flag = true;
+						end = i - 2;
+						int counter = 1;
+						for ( j = end ; j >= 0 ; j-- )
+						{
+							if ( string.charAt(j) == ')' )
+								++counter;
+							if ( string.charAt(j) != '(' )
+								continue;
+							--counter;
+							if ( counter == 0 )
+							{
+								begin = j + 1;
+								break;
+							}
+						}
+					}
+					else
+					{
+						end = i - 1;
+						for ( j = end ; j >= 0 ; j-- )
+						{
+							if ( isNumber(string.charAt(j)) || string.charAt(j) == '.' )
+								continue;
+							begin = j + 1;
+							break;
+						}
+					}
+					if ( begin == end )
+						toFctr = Character.toString(string.charAt(end) );
+					else
+						toFctr = string.substring(begin, end + 1);;
+					if ( toFctr.contains("sqrt") )
+						toFctr = Repair_Square_Root( toFctr );
+					if ( toFctr.contains("^2") )
+						toFctr = Repair_Square( toFctr );
+					if ( toFctr.contains("!"))
+						toFctr = Repair_Factorial ( toFctr );
+					calc.Load(toFctr);
+					toFctr = calc.Calculate();
+					Fctr = Factorial( Double.parseDouble( toFctr ));
+					if ( flag )
+						toFctr = string.substring(begin - 1, end + 3);
+					else
+						toFctr = string.substring(begin, end + 2);
+					string = new String(string.replace(toFctr, Double.toString(Fctr)));
+					break;
+				}
+			}
+		}
+		return string;
+	}
+	
+	private static double Factorial( double n )
+	{
+		if ( n - (int) n == 0 )
+		{
+			if ( n != 0 )
+			{
+				for ( int i = (int) n-1 ; i > 0 ; i--)
+					n = n*i;
+			}
+			else
+				n = 1;
+			
+		}
+		else
+			n = Math.sqrt(2*Math.PI*n)*Math.pow( n/Math.E, n)*Math.pow(Math.E, 1/(12*n) );
+		return n;
+	}
 	private static boolean isNumber( char a )
 	{
 		char[] numbers = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
@@ -115,16 +220,4 @@ public class StringOperations
 		return false;
 	}
 	
-	private static boolean isOperator( char a )
-	{
-		char[] operators = { '+', '-', '*', '/' };
-		for (char operator : operators)
-		{
-			if ( operator == a )
-			{
-				return true;
-			}
-		}
-		return false;
-	}
 }

@@ -100,19 +100,6 @@ public class InterfaceController implements Initializable
     void Button_Bracket(ActionEvent event) 
     {
     	int counter = 0;
-    	if ( textField.getText().length() != 0 )
-    	{
-    		char last = textField.getText().charAt( textField.getText().length() - 1 );
-        	if ( textField.getText().length() > 1 )
-        	{
-        		char prelast = textField.getText().charAt( textField.getText().length() - 2 );
-        		if ( last == '2' && prelast == '^' )
-        		{
-        			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna wykonac tej operacji", "Po znaku potegi mozna dac tylko opeartory", ButtonType.OK);
-        			return;
-        		}
-        	}
-    	}
     	if ( event.getSource() == right_bracket )
     	{
     		char last = textField.getText().charAt( textField.getText().length() - 1 );
@@ -134,7 +121,8 @@ public class InterfaceController implements Initializable
         	}
     		if ( counter >= 1)
     		{
-    			Button_Numbers( event);
+    			Button temporary = (Button) event.getSource();
+    	        textField.setText(textField.getText() + temporary.getText());
     		}
     		else
     		{
@@ -143,14 +131,28 @@ public class InterfaceController implements Initializable
     	}
     	else
     	{
+    		if ( textField.getText().length() != 0 )
+        	{
+        		char last = textField.getText().charAt( textField.getText().length() - 1 );
+            	if ( textField.getText().length() > 1 )
+            	{
+            		char prelast = textField.getText().charAt( textField.getText().length() - 2 );
+            		if ( last == '2' && prelast == '^' )
+            		{
+            			alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna wykonac tej operacji", "Po znaku potegi mozna dac tylko opeartory", ButtonType.OK);
+            			return;
+            		}
+            	}
+        	}
     		if ( textField.getText().length() == 0 )
     		{
     	    	Button temporary = (Button) event.getSource();
     	        textField.setText(textField.getText() + temporary.getText());
     		}
-    		else if ( isOperator( textField.getText().charAt(textField.getText().length() - 1 ) ) )
+    		else if ( isOperator( textField.getText().charAt(textField.getText().length() - 1 )) || textField.getText().charAt(textField.getText().length() - 1) == '(' )
     		{
-    			Button_Numbers( event );
+    			Button temporary = (Button) event.getSource();
+    	        textField.setText(textField.getText() + temporary.getText());
     		}
     		else
     		{
@@ -165,6 +167,35 @@ public class InterfaceController implements Initializable
     {
     	if ( textField.getText().length() != 0 )
     	{
+    		char last = textField.getText().charAt( textField.getText().length() - 1 );
+    		if ( textField.getText().length() > 1)
+    		{
+    			// usuwanie kwadratu
+    			if ( last == '2')
+    			{
+    				char prelast = textField.getText().charAt( textField.getText().length() - 2 );
+        			if ( prelast == '^' )
+        			{
+        				String temporary = new String (textField.getText() );
+        	    		temporary = temporary.substring(0, temporary.length()-2 );
+        	    		textField.setText( temporary );
+        	    		return;
+        			}
+    			}
+    			// uswanie potegi
+    			if ( last == '(')
+    			{
+    				char prelast = textField.getText().charAt( textField.getText().length() - 2 );
+        			if ( prelast == 't' )
+        			{
+        				String temporary = new String (textField.getText() );
+        	    		temporary = temporary.substring(0, temporary.length()-5 );
+        	    		textField.setText( temporary );
+        	    		return;
+        			}
+    			}
+    			
+    		}
     		String temporary = new String (textField.getText() );
     		temporary = temporary.substring(0, temporary.length()-1 );
     		textField.setText( temporary );
@@ -286,7 +317,7 @@ public class InterfaceController implements Initializable
         	if ( textField.getText().length() != 0 )
         	{
             	char last = textField.getText().charAt( textField.getText().length() -1 );
-            	if ( isOperator(last)  )
+            	if ( isOperator(last) || last == '('  )
             	{
                 	textField.setText(textField.getText() + "sqrt" + '(' );
             	}
@@ -309,9 +340,12 @@ public class InterfaceController implements Initializable
     	{
     		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozesz rozpoczac od operatora.", "", ButtonType.OK);
     	}
-    	else if ( isOperator( textField.getText().charAt( textField.getText().length() - 1 ) ) || textField.getText().charAt( textField.getText().length() - 1 ) == '!' )
+    	else if ( isOperator( textField.getText().charAt( textField.getText().length() - 1 ) ) )
     	{
-    		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozesz dodawac po sobie dwoch operatorow.", "", ButtonType.OK);
+    		String temporary2 = new String (textField.getText() );
+    		temporary2 = temporary2.substring(0, temporary2.length()-1 );
+    		textField.setText( temporary2 );
+    		textField.setText(textField.getText() + "*");
     	}
     	else
     		textField.setText(textField.getText() + "*");
@@ -325,9 +359,12 @@ public class InterfaceController implements Initializable
     	{
     		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozesz rozpoczac od operatora.", "", ButtonType.OK);
     	}
-    	else if ( isOperator( textField.getText().charAt( textField.getText().length() - 1 ) ) || textField.getText().charAt( textField.getText().length() - 1 ) == '!' )
+    	else if ( isOperator( textField.getText().charAt( textField.getText().length() - 1 ) ) )
     	{
-    		alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozesz dodawac po sobie dwoch operatorow.", "", ButtonType.OK);
+    		String temporary2 = new String (textField.getText() );
+    		temporary2 = temporary2.substring(0, temporary2.length()-1 );
+    		textField.setText( temporary2 );
+    		textField.setText(textField.getText() + temporary.getText());
     	}
     	else
     		textField.setText(textField.getText() + temporary.getText());

@@ -4,8 +4,12 @@ import java.util.List;
 
 import jdk.jshell.JShell;
 import jdk.jshell.SnippetEvent;
-import java.lang.Math;
-import com.kaczmii.calculator.model.StringOperations;;
+import com.kaczmii.calculator.model.StringOperations;
+
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+
+import com.kaczmii.calculator.model.AlertBox;
 
 public class Calculator 
 {
@@ -24,6 +28,7 @@ public class Calculator
 		string = new String( StringOperations.Repair_Percent(string) );
 		string = new String( StringOperations.Repair_Square(string) );
 		string = new String( StringOperations.Repair_Square_Root(string) );
+		string = new String( StringOperations.Repair_Factorial(string) );
 		algebric_Expression = new String(string);
 	}
 	
@@ -31,7 +36,20 @@ public class Calculator
 	{
 		try
 		{
-			System.out.println( algebric_Expression );
+			int counter = 0;
+			AlertBox alertBox = new AlertBox();
+			for ( int i = 0 ; i < algebric_Expression.length() ; i ++ )
+			{
+				if ( algebric_Expression.charAt(i) == '(' )
+					counter++;
+				if ( algebric_Expression.charAt(i) == ')' )
+					counter--;
+			}
+			if ( counter != 0 )
+			{
+				alertBox.show(AlertType.ERROR, "BLAD", "Nie mozna policzyc wyrazenia", "Nie zgadza sie ilosc nawiasow", ButtonType.OK);
+				return algebric_Expression;
+			}
 			List<SnippetEvent> events = jshell.eval(algebric_Expression);
 			for (SnippetEvent e : events) 
 			{
@@ -46,13 +64,14 @@ public class Calculator
 						}
 						break;
 					default: 
-						System.out.printf("Error\n");
-						return new String("");
+						alertBox.show(AlertType.ERROR, "BLAD", "Nie mozna policzyc wyrazenia", "Wprowadzone wyrazenie jest nieprawidlowe", ButtonType.OK);
+						return algebric_Expression;
 					} 
 				}
 				else
 				{
-					return new String("");
+					alertBox.show(AlertType.ERROR, "BLAD", "Nie mozna policzyc wyrazenia", "Wprowadzone wyrazenie jest nieprawidlowe", ButtonType.OK);
+					return algebric_Expression;
 				}
 			} 
 		}
