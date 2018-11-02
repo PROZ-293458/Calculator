@@ -3,10 +3,8 @@ package com.kaczmii.calculator.model;
 
 import java.lang.Math;
 import com.kaczmii.calculator.model.Calculator;
-
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-
 import com.kaczmii.calculator.model.AlertBox;
 
 public class StringOperations 

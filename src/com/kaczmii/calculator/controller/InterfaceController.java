@@ -16,6 +16,11 @@ import java.util.ResourceBundle;
 import com.kaczmii.calculator.model.AlertBox;
 import com.kaczmii.calculator.model.Calculator;
 
+/*
+ * Klasa zajmujaca sie kontrolowaniem interfejsu
+ * @param calculator Obiekt zajmujacy sie sprawdzaniem poprawnosci i kalkulujacy
+ * @param alert Obiekt zajmujacy sie wystwietlaniem alertow
+ */
 public class InterfaceController implements Initializable 
 {
 	private Calculator calculator = new Calculator();
@@ -96,6 +101,9 @@ public class InterfaceController implements Initializable
     @FXML
     private Button right_bracket;
 
+    /*
+     * Metoda wstawiajaca nawiasy, sprawdzajaca czy mozna to zrobic.
+     */
     @FXML
     void Button_Bracket(ActionEvent event) 
     {
@@ -177,7 +185,9 @@ public class InterfaceController implements Initializable
     	}
     		
     }
-    
+    /*
+     * Metoda usuwajaca jeden znak, sprawdzajaca czy mozna to zrobic.
+     */
     @FXML
     void Button_Clear(ActionEvent event) 
     {
@@ -217,20 +227,26 @@ public class InterfaceController implements Initializable
     		textField.setText( temporary );
     	}
     }
-
+    /*
+     * Metoda usuwajaca caly string w textField.
+     */
     @FXML
     void Button_Clear_Everything(ActionEvent event) 
     {
     	textField.setText("");
     }
-
+    /*
+     * Metoda zajmujaca sie przekalkulowaniem dzialania, w przypadku kiedy wpisany tekst jest zly, wyrzuca alert
+     */
     @FXML
     void Button_Equals(ActionEvent event) 
     {
     	if( calculator.Load(textField.getText() ) )
     		textField.setText( calculator.Calculate() );
     }
-
+    /*
+     * Metoda wstawiajaca silnie, sprawdzajaca czy mozna to zrobic.
+     */
     @FXML
     void Button_Factorial(ActionEvent event) 
     {
@@ -257,7 +273,9 @@ public class InterfaceController implements Initializable
     	alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna uzywac silni w tej sytuacji.", "Silnia jest dozwolona tylko za ')' i za liczbami", ButtonType.OK);
     
     }
-
+    /*
+     * Metoda wstawiajaca liczby, sprawdzajaca czy mozna to zrobic.
+     */
     @FXML
     void Button_Numbers(ActionEvent event) 
     {
@@ -301,7 +319,9 @@ public class InterfaceController implements Initializable
     	Button temporary = (Button) event.getSource();
         textField.setText(textField.getText() + temporary.getText());
     }
-
+    /*
+     * Metoda wstawiajaca procenty, sprawdzajaca czy mozna to zrobic.
+     */
     @FXML
     void Button_Percent(ActionEvent event) 
     {
@@ -329,7 +349,9 @@ public class InterfaceController implements Initializable
         	textField.setText(textField.getText() + "%" );
     	}
     }
-
+    /*
+     * Metoda wstawiajaca pierwiastek, sprawdzajaca czy mozna to zrobic.
+     */
     @FXML
     void Button_Square_Root(ActionEvent event) 
     {
@@ -352,7 +374,9 @@ public class InterfaceController implements Initializable
 
         }
     }
-
+    /*
+     * Metoda wstawiajaca znak mnozenia, sprawdzajaca czy mozna to zrobic.
+     */
     @FXML
     void Button_Times(ActionEvent event) 
     {
@@ -370,7 +394,9 @@ public class InterfaceController implements Initializable
     	else
     		textField.setText(textField.getText() + "*");
     }
-
+    /*
+     * Metoda wstawiajaca operatory, sprawdzajaca czy mozna to zrobic.
+     */
     @FXML
     void Button_operator(ActionEvent event)
     {
@@ -389,7 +415,9 @@ public class InterfaceController implements Initializable
     	else
     		textField.setText(textField.getText() + temporary.getText());
     }
-
+    /*
+     * Metoda wstawiajaca kwadrat, sprawdzajaca czy mozna to zrobic.
+     */
     @FXML
     void Button_square(ActionEvent event) 
     {
@@ -415,7 +443,9 @@ public class InterfaceController implements Initializable
     	alert.show(AlertType.WARNING, "OSTRZEZENIE", "Nie mozna uzywac kwadratu w tej sytuacji.", "Kwadrat jest dozwolona tylko za ')' i za liczbami", ButtonType.OK);
     
     }
-    
+    /*
+     * Metoda wstawiajaca kropke, sprawdzajaca czy mozna to zrobic.
+     */
     @FXML
     void Button_dot(ActionEvent event) 
     {
@@ -460,7 +490,12 @@ public class InterfaceController implements Initializable
 		// TODO Auto-generated method stub
 		
 	}
-	
+	/*
+     * Metoda sprawdza, czy zadany char jest liczba
+     * @param char a Zadany char
+     * @param numbers Tablica liczb od 0 do 9
+     * @return prawda lub falsz w zaleznosci czy dany char jest liczba
+     */
 	private boolean isNumber( char a )
 	{
 		char[] numbers = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
@@ -471,7 +506,12 @@ public class InterfaceController implements Initializable
 		}
 		return false;
 	}
-	
+	/*
+     * Metoda sprawdza, czy zadany char jest operatorem
+     * @param char a Zadany char
+     * @param operators Tablica operatorow
+     * @return prawda lub falsz w zaleznosci czy dany char jest operatorem
+     */
 	private boolean isOperator( char a )
 	{
 		char[] operators = { '+', '-', '*', '/' };
