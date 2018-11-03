@@ -6,38 +6,45 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/Java/javafx-sdk-11/lib/javafx.base.jar">
+	<classpathentry kind="lib" path="C:/Program Files/Java/javafx-sdk-11/lib/javafx.base.jar" sourcepath="C:/Program Files/Java/javafx-sdk-11/lib/javafx.base.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="https://openjfx.io/javadoc/11/javafx.base/module-summary.html"/>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/Java/javafx-sdk-11/lib/javafx.controls.jar">
+	<classpathentry kind="lib" path="C:/Program Files/Java/javafx-sdk-11/lib/javafx.controls.jar" sourcepath="C:/Program Files/Java/javafx-sdk-11/lib/javafx.controls.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="https://openjfx.io/javadoc/11/javafx.controls/module-summary.html"/>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/Java/javafx-sdk-11/lib/javafx.fxml.jar">
+	<classpathentry kind="lib" path="C:/Program Files/Java/javafx-sdk-11/lib/javafx.fxml.jar" sourcepath="C:/Program Files/Java/javafx-sdk-11/lib/javafx.fxml.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="https://openjfx.io/javadoc/11/javafx.fxml/module-summary.html"/>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/Java/javafx-sdk-11/lib/javafx.graphics.jar">
+	<classpathentry kind="lib" path="C:/Program Files/Java/javafx-sdk-11/lib/javafx.graphics.jar" sourcepath="C:/Program Files/Java/javafx-sdk-11/lib/javafx.graphics.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="https://openjfx.io/javadoc/11/javafx.graphics/module-summary.html"/>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Program Files/Java/javafx-sdk-11/lib/javafx.media.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="https://openjfx.io/javadoc/11/javafx.media/module-summary.html"/>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Program Files/Java/javafx-sdk-11/lib/javafx.swing.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="https://openjfx.io/javadoc/11/javafx.swing/module-summary.html"/>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Program Files/Java/javafx-sdk-11/lib/javafx.web.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="https://openjfx.io/javadoc/11/javafx.web/module-summary.html"/>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>

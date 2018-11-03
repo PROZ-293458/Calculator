@@ -30,6 +30,7 @@ public class Main extends Application
 	}
 	
 	/*
+	 * Metoda zajmuje sie zaladowaniem fxml a takze wyswietleniem go
 	 * @see javafx.application.Application#start(javafx.stage.Stage)
 	 * @exception e Wyjatek jest zgaszany, kiedy cos pojdzie nie tak
 	 */

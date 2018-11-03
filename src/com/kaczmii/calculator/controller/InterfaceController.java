@@ -186,7 +186,7 @@ public class InterfaceController implements Initializable
     		
     }
     /*
-     * Metoda usuwajaca jeden znak, sprawdzajaca czy mozna to zrobic.
+     * Metoda usuwajaca jeden znak, sprawdzajaca czy mozna to zrobic
      */
     @FXML
     void Button_Clear(ActionEvent event) 
@@ -228,7 +228,7 @@ public class InterfaceController implements Initializable
     	}
     }
     /*
-     * Metoda usuwajaca caly string w textField.
+     * Metoda usuwajaca caly string w textField
      */
     @FXML
     void Button_Clear_Everything(ActionEvent event) 
@@ -245,7 +245,7 @@ public class InterfaceController implements Initializable
     		textField.setText( calculator.Calculate() );
     }
     /*
-     * Metoda wstawiajaca silnie, sprawdzajaca czy mozna to zrobic.
+     * Metoda wstawiajaca silnie, sprawdzajaca czy mozna to zrobic
      */
     @FXML
     void Button_Factorial(ActionEvent event) 
@@ -274,7 +274,7 @@ public class InterfaceController implements Initializable
     
     }
     /*
-     * Metoda wstawiajaca liczby, sprawdzajaca czy mozna to zrobic.
+     * Metoda wstawiajaca liczby, sprawdzajaca czy mozna to zrobic
      */
     @FXML
     void Button_Numbers(ActionEvent event) 
@@ -320,7 +320,7 @@ public class InterfaceController implements Initializable
         textField.setText(textField.getText() + temporary.getText());
     }
     /*
-     * Metoda wstawiajaca procenty, sprawdzajaca czy mozna to zrobic.
+     * Metoda wstawiajaca procenty, sprawdzajaca czy mozna to zrobic
      */
     @FXML
     void Button_Percent(ActionEvent event) 
@@ -350,7 +350,7 @@ public class InterfaceController implements Initializable
     	}
     }
     /*
-     * Metoda wstawiajaca pierwiastek, sprawdzajaca czy mozna to zrobic.
+     * Metoda wstawiajaca pierwiastek, sprawdzajaca czy mozna to zrobic
      */
     @FXML
     void Button_Square_Root(ActionEvent event) 
@@ -375,7 +375,7 @@ public class InterfaceController implements Initializable
         }
     }
     /*
-     * Metoda wstawiajaca znak mnozenia, sprawdzajaca czy mozna to zrobic.
+     * Metoda wstawiajaca znak mnozenia, sprawdzajaca czy mozna to zrobic
      */
     @FXML
     void Button_Times(ActionEvent event) 
@@ -395,7 +395,7 @@ public class InterfaceController implements Initializable
     		textField.setText(textField.getText() + "*");
     }
     /*
-     * Metoda wstawiajaca operatory, sprawdzajaca czy mozna to zrobic.
+     * Metoda wstawiajaca operatory, sprawdzajaca czy mozna to zrobic
      */
     @FXML
     void Button_operator(ActionEvent event)
@@ -416,7 +416,7 @@ public class InterfaceController implements Initializable
     		textField.setText(textField.getText() + temporary.getText());
     }
     /*
-     * Metoda wstawiajaca kwadrat, sprawdzajaca czy mozna to zrobic.
+     * Metoda wstawiajaca kwadrat, sprawdzajaca czy mozna to zrobic
      */
     @FXML
     void Button_square(ActionEvent event) 
@@ -444,7 +444,7 @@ public class InterfaceController implements Initializable
     
     }
     /*
-     * Metoda wstawiajaca kropke, sprawdzajaca czy mozna to zrobic.
+     * Metoda wstawiajaca kropke, sprawdzajaca czy mozna to zrobic
      */
     @FXML
     void Button_dot(ActionEvent event) 

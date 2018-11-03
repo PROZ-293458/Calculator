@@ -6,15 +6,25 @@ import com.kaczmii.calculator.model.Calculator;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import com.kaczmii.calculator.model.AlertBox;
-
+/*
+ * Klasa zajmuje sie naprawianiem stringu ze znakow sqrt, !, ^2, % zanim ten string zostanie wrzucony do policzenia
+ * przez klase Calculator, poniewaz JShell by sobie z nimi nie poradzil
+ */
 public class StringOperations 
 {
+	/*
+	 * Metoda zamienia wyszystkie % na /100.0
+	 * @return string Zwraca string bez %
+	 */
 	public static String Repair_Percent( String string)
 	{
 		string = new String(string.replaceAll("%", "/100.0"));
 		return string;
 	}
-	
+	/*
+	 * Metoda znajduje wywolanie pierwiastka i zastepuje go jego policzona juz wartoscia
+	 * @return string Zwraca string bez sqrt
+	 */
 	public static String Repair_Square_Root ( String string )
 	{
 		AlertBox alertBox = new AlertBox();
@@ -67,7 +77,10 @@ public class StringOperations
 		}
 		return string;
 	}
-	
+	/*
+	 * Metoda znajduje wywolanie kwadratu i zastepuje go jego policzona juz wartoscia
+	 * @return string Zwraca string bez ^2
+	 */
 	public static String Repair_Square ( String string )
 	{
 		AlertBox alertBox = new AlertBox();
@@ -144,7 +157,10 @@ public class StringOperations
 		}
 		return string;
 	}
-	
+	/*
+	 * Metoda znajduje wywolanie silni i zastepuje go jego policzona juz wartoscia
+	 * @return string Zwraca string bez !
+	 */
 	public static String Repair_Factorial ( String string )
 	{
 		AlertBox alertBox = new AlertBox();
@@ -221,7 +237,10 @@ public class StringOperations
 		}
 		return string;
 	}
-	
+	/*
+	 * Meotda liczy wartosc silni tej calkowitej jak i liczb zmiennoprzecinkowych
+	 * @return n Policzona wartosc silni
+	 */
 	private static double Factorial( double n )
 	{
 		if ( n - (int) n == 0 )
@@ -239,6 +258,9 @@ public class StringOperations
 			n = Math.sqrt(2*Math.PI*n)*Math.pow( n/Math.E, n)*Math.pow(Math.E, 1/(12*n) );
 		return n;
 	}
+	/*
+	 * Metoda sprawdza czy podany char jest liczba
+	 */
 	private static boolean isNumber( char a )
 	{
 		char[] numbers = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };

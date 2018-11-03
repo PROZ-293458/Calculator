@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 /*
- * Klasa zajmujaca sie plikami fxml
+ * Klasa zajmujaca sie obsluga plikow fxml
  */
 public class ViewLoader<T,U>
 {
