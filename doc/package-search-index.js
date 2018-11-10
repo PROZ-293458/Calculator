@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.kaczmii.calculator"},{"l":"com.kaczmii.calculator.controller"},{"l":"com.kaczmii.calculator.model"},{"l":"com.kaczmii.calculator.view"}]

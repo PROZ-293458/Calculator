@@ -8,31 +8,31 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * Klasa Main zajmuj¹ca siê wyœwietlaniem okienka kalkulatora
+ * Klasa Main zajmujaca sie wyswietlaniem okienka kalkulatora
  * @author Kaczmarek Kacper / kkaczma5@stud.elka.pw.edu.pl
  * @version final(?)
  */
 public class Main extends Application
 {
-	/*
+	/**
 	 * Konstruktor klasy Main, nie ma zadnego zadania
 	 */
 	public Main()
 	{
 		
 	}
-	/*
+	/**
 	 * Metoda main, ktora wyswietla okienko
+	 * @param args[] Tablica stringow argumentow z konsoli
 	 */
 	public static void main(String args[] )
 	{
 		launch(args);
 	}
 	
-	/*
+	/**
 	 * Metoda zajmuje sie zaladowaniem fxml a takze wyswietleniem go
 	 * @see javafx.application.Application#start(javafx.stage.Stage)
-	 * @exception e Wyjatek jest zgaszany, kiedy cos pojdzie nie tak
 	 */
 	@Override
 	public void start(Stage arg0) throws Exception 

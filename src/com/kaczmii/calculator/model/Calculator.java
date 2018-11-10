@@ -5,23 +5,20 @@ import java.util.List;
 import jdk.jshell.JShell;
 import jdk.jshell.SnippetEvent;
 import com.kaczmii.calculator.model.StringOperations;
+import com.kaczmii.calculator.view.AlertBox;
 
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
-import com.kaczmii.calculator.model.AlertBox;
-
-/*
+/**
  * Klasa zajmujaca sie kalkulowaniem zadanego stringu za pomoca JShell'a. Sprawdza takze poprawnosc stringu.
- * @param algebric_Expression String w ktorym zapisywany jest string do przekalkulowania
- * @param jshell Obiket klasy jshell zajmujacy sie kalkulowaniem
  */
 public class Calculator 
 {
 	
 	private String algebric_Expression;
 	private final JShell jshell;
-	/*
+	/**
 	 * Kontruktor klasy Calculator zajmujacy sie zainicjalizowaniem jshell'a oraz ustawieniem algebric_Expression na null
 	 */
 	public Calculator() 
@@ -29,10 +26,10 @@ public class Calculator
 			jshell = JShell.create();
 			algebric_Expression = null;
 	}
-	/*
+	/**
 	 * Meotda zaladowuje string do zmiennej algebric_Expression i sprawdza jego poprawnosc
 	 * @param string String do sprawdzenia
-	 * @param counter Licznik nawiasow
+	 * @return prawda lub falsz w zaleznosci czy string jest poprawny do zaladowania
 	 */
 	public boolean Load( String string )
 	{
@@ -62,8 +59,9 @@ public class Calculator
 		
 		
 	}
-	/*
+	/**
 	 * Metoda kalkuluje algebric_Expression za pomoca jshella
+	 * @return Metoda zwraca string, ktory jest wynikiem obliczen zadanych algebric_Expression
 	 */
 	public String Calculate( )
 	{
